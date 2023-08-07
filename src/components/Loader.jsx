@@ -1,4 +1,5 @@
 import React from 'react';
+// import styled from 'styled-components';
 import { RotatingLines } from 'react-loader-spinner';
 
 export const Loader = () => {
@@ -14,3 +15,9 @@ export const Loader = () => {
     </>
   );
 };
+
+// const Wrapper = styled.dic`
+//   display: grid;
+//   place-items: center;
+//   min-height: 50vh;
+// `;

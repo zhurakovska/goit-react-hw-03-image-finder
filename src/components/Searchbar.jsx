@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Searchbar = ({ onSearchInput }) => {
+export const Searchbar = ({ onSearchInput, handleSubmit }) => {
   const onSubmit = e => {
     e.preventDefault();
     const query = e.target.query.value;
@@ -9,8 +9,8 @@ export const Searchbar = ({ onSearchInput }) => {
   return (
     <header>
       <form onSubmit={onSubmit}>
-        <button type="submit">
-          <span>Search</span>
+        <button onClick={handleSubmit} type="button">
+          Search
         </button>
 
         <input
@@ -19,6 +19,7 @@ export const Searchbar = ({ onSearchInput }) => {
           autoFocus
           name="query"
           placeholder="Search images and photos"
+          onChange={e => onSearchInput(e.target.value)} // хендлим введеное значение
         />
       </form>
     </header>
