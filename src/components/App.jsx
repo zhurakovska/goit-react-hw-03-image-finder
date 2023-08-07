@@ -6,6 +6,17 @@ import { Button } from './Button';
 import { fetchImages } from 'service/api';
 import { Loader } from './Loader';
 
+const initialState = {
+  loading: false,
+  error: '',
+  images: [],
+  page: 1,
+  per_page: 12,
+  totalHits: 0,
+  query: '',
+  showloadMore: false,
+};
+
 export class App extends React.Component {
   state = {
     loading: false,
@@ -13,13 +24,12 @@ export class App extends React.Component {
     images: [],
     page: 1,
     per_page: 12,
-    total: null,
+    totalHits: 0,
     query: '',
+    showloadMore: false,
   };
 
   async downloadImages() {
-    const { page, images } = this.state;
-
     try {
       this.setState({ loading: true });
       const { per_page, page, query } = this.state;
@@ -29,15 +39,16 @@ export class App extends React.Component {
         return;
       }
 
-      const { hits } = await fetchImages({
+      const { hits, totalHits } = await fetchImages({
         // тут мы получаем запрос
         per_page, // тут мы перезаписываем этот запрос
         page,
         q: query,
       });
-
+      console.log(page * per_page < totalHits);
       this.setState({
-        images: [...this.state.images, ...hits],
+        images: [...this.state.images, ...hits], // тут мы соединяем старые картинки с новыми
+        showloadMore: page * per_page < totalHits,
       });
     } catch (error) {
     } finally {
@@ -47,15 +58,15 @@ export class App extends React.Component {
 
   async componentDidUpdate(_, prevState) {
     const { page } = this.state;
-
     if (prevState.page !== page) {
+      // при нажатии на лоад мор, page уже не будет равен prevState.page, потому что ты обновишь это значение в функции handleLoadMore увеличив на один
       this.downloadImages();
     }
   }
 
   handleSubmit = async () => {
-    this.setState({ images: [] });
-    this.downloadImages();
+    this.setState({ images: [], page: 1, totalHits: 0 }); // обнуляем стейт чтобы при новом запросе не мешать данные с предыдущими
+    this.downloadImages(); // делаем первый запрос при нажатии на кнопку поиска
   };
 
   handleLoadMore = () => {
@@ -68,7 +79,7 @@ export class App extends React.Component {
   };
 
   render() {
-    const { images, loading } = this.state;
+    const { images, loading, showloadMore } = this.state;
     console.log(this.state.images);
     return (
       <>
@@ -78,7 +89,7 @@ export class App extends React.Component {
         />
         {<ImageGallery images={images} />}
         {loading && <Loader />}
-        {!!images.length && <Button onClick={this.handleLoadMore} />}
+        {showloadMore && <Button onClick={this.handleLoadMore} />}
       </>
     );
   }
