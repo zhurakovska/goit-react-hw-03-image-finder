@@ -1,13 +1,10 @@
 import React from 'react';
+
 import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
 
-import axios from 'axios';
-
-//38181676-c389c3ce2b1eee7a286cf8f0e
-//https://pixabay.com/api/
-
-const API_KEY = '38181676-c389c3ce2b1eee7a286cf8f0e';
+import { fetchImages } from 'service/api';
+import { Loader } from './Loader';
 
 export class App extends React.Component {
   state = {
@@ -17,34 +14,34 @@ export class App extends React.Component {
     page: 1,
     per_page: 12,
     total: null,
+    query: 'rain',
   };
 
   async componentDidMount() {
+    const { per_page, page, query } = this.state;
     try {
-      const { total, hits, totalHits } = await this.fetchImages();
+      this.setState({ loading: true });
+      const { hits } = await fetchImages({
+        per_page: per_page,
+        page: page,
+        q: query,
+      });
       this.setState({ images: hits });
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      this.setState({ loading: false });
+    }
   }
 
-  fetchImages = async () => {
-    const { data } = await axios.get('https://pixabay.com/api/', {
-      params: {
-        q: 'tree',
-        page: 1,
-        key: API_KEY,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        per_page: 12,
-      },
-    });
-    return data;
+  handleSearchInput = query => {
+    this.setState({ query });
   };
-
   render() {
+    const { images, loading } = this.state;
     return (
       <>
-        <Searchbar />
-        <ImageGallery images={this.state.images} />
+        <Searchbar onSearchInput={this.handleSearchInput} />
+        {loading ? <Loader /> : <ImageGallery images={images} />}
       </>
     );
   }
