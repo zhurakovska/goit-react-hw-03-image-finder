@@ -9,7 +9,7 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
   return (
     <header>
       <form onSubmit={onSubmit}>
-        <button onClick={handleSubmit} type="button">
+        <button onClick={handleSubmit} type="submit">
           Search
         </button>
 
@@ -19,7 +19,7 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
           autoFocus
           name="query"
           placeholder="Search images and photos"
-          onChange={e => onSearchInput(e.target.value)} // хендлим введеное значение
+          onChange={e => onSearchInput(e.target.value)} // хендлим введеное
         />
       </form>
     </header>
