@@ -45,10 +45,10 @@ export class App extends React.Component {
         page,
         q: query,
       });
-      console.log(page * per_page < totalHits);
+
       this.setState({
         images: [...this.state.images, ...hits], // тут мы соединяем старые картинки с новыми
-        showloadMore: page * per_page < totalHits,
+        showloadMore: page * per_page < totalHits, // по дефолту фолс но когда делаем проверку с формулой то если условие верное то вернет тру иначе фолс
       });
     } catch (error) {
     } finally {
