@@ -8,7 +8,7 @@ export const ImageGalleryItem = ({ photo, toggleModal }) => {
       <img
         onClick={() => toggleModal(photo.largeImageURL)}
         src={photo.webformatURL}
-        alt="photo"
+        alt="fox"
       />
     </ImageItemStyled>
   );
