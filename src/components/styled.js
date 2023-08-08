@@ -30,13 +30,6 @@ export const StyledButtonSearch = styled.button`
   }
 `;
 
-export const LoaderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-
 export const LoadMoreStyledBtn = styled.button`
   padding: 10px 20px;
   font-size: 16px;

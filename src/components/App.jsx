@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
@@ -65,7 +64,6 @@ export class App extends React.Component {
   };
 
   handleLoadMore = () => {
-    const { images, hits } = this.state;
     this.setState(prevState => ({ page: prevState.page + 1 })); // Увеличиваем текущую страницу на 1
   };
 
@@ -73,24 +71,16 @@ export class App extends React.Component {
     this.setState({ query });
   };
 
-  toggleModal = (imageURL, alt) => {
+  toggleModal = imageURL => {
     this.setState(prevState => ({
       isModalOpen: !prevState.isModalOpen,
       currentImage: imageURL,
-      tags: alt,
     }));
   };
 
   render() {
-    const {
-      images,
-      loading,
-      showloadMore,
-      isModalOpen,
-      children,
-      currentImage,
-      tags,
-    } = this.state;
+    const { images, loading, showloadMore, isModalOpen, currentImage, tags } =
+      this.state;
     return (
       <Container>
         <Searchbar
@@ -106,7 +96,7 @@ export class App extends React.Component {
             currentImage={currentImage}
             tags={tags}
           >
-            <img src={currentImage} alt={tags} onClick={this.getModalImage} />{' '}
+            <img src={currentImage} alt="text" onClick={this.getModalImage} />{' '}
           </Modal>
         )}{' '}
         {/* если модалка открытра то мы показываем наше окно */}
