@@ -11,10 +11,6 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
   return (
     <header>
       <StyledForm onSubmit={onSubmit}>
-        <StyledButtonSearch onClick={handleSubmit} type="submit">
-          Search
-        </StyledButtonSearch>
-
         <StyledInput
           type="text"
           autoComplete="off"
@@ -23,6 +19,9 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
           placeholder="Search images and photos"
           onChange={e => onSearchInput(e.target.value)} // хендлим введеное
         />
+        <StyledButtonSearch onClick={handleSubmit} type="submit">
+          Search
+        </StyledButtonSearch>
       </StyledForm>
     </header>
   );

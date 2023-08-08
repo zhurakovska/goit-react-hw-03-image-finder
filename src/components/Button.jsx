@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { LoadMoreStyledBtn } from './styled';
+
 export const Button = ({ onClick }) => {
-  return <button onClick={onClick}>Load more</button>;
+  return <LoadMoreStyledBtn onClick={onClick}>Load more</LoadMoreStyledBtn>;
 };

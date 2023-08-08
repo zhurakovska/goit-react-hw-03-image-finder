@@ -2,10 +2,14 @@ import React from 'react';
 
 import { ImageItemStyled } from './styled';
 
-export const ImageGalleryItem = ({ photo }) => {
+export const ImageGalleryItem = ({ photo, toggleModal }) => {
   return (
     <ImageItemStyled>
-      <img src={photo.webformatURL} alt="photo" />
+      <img
+        onClick={() => toggleModal(photo.largeImageURL)}
+        src={photo.webformatURL}
+        alt="photo"
+      />
     </ImageItemStyled>
   );
 };

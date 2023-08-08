@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalWrapper, StyledModalWindow, StyledTest } from './styled';
+import { ModalWrapper, StyledModalWindow } from './styled';
 export class Modal extends React.Component {
   state = {
     currentImage: this.props.largeImageURL,
@@ -30,12 +30,10 @@ export class Modal extends React.Component {
   };
 
   render() {
-    const { tags, currentImage } = this.props;
+    // const { tags, currentImage } = this.props;
     return (
       <ModalWrapper onClick={this.onBackdropClick}>
-        <StyledModalWindow>
-          <img src={currentImage} alt={tags} onClick={this.getModalImage} />
-        </StyledModalWindow>
+        <StyledModalWindow>{this.props.children}</StyledModalWindow>
       </ModalWrapper>
     );
   }

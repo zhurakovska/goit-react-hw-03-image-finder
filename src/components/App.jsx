@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
@@ -105,7 +106,7 @@ export class App extends React.Component {
             currentImage={currentImage}
             tags={tags}
           >
-            {children}
+            <img src={currentImage} alt={tags} onClick={this.getModalImage} />{' '}
           </Modal>
         )}{' '}
         {/* если модалка открытра то мы показываем наше окно */}

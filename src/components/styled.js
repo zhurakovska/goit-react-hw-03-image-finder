@@ -10,9 +10,8 @@ export const StyledForm = styled.form`
 export const StyledInput = styled.input`
   padding: 10px;
   font-size: 16px;
-  width: 300px;
+  max-width: 400px;
   border: 1px solid #ccc;
-  border-radius: 5px 0 0 5px;
   flex: 1;
 `;
 
@@ -20,9 +19,9 @@ export const StyledButtonSearch = styled.button`
   padding: 10px 20px;
   font-size: 16px;
   background-color: #007bff;
+  margin-left: 20px;
   border: none;
   color: #fff;
-  border-radius: 0 5px 5px 0;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -31,14 +30,32 @@ export const StyledButtonSearch = styled.button`
   }
 `;
 
+export const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const LoadMoreStyledBtn = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  margin: 0 auto;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 100px;
+`;
+
 export const Container = styled.div`
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 export const ImageListUl = styled.ul`

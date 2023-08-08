@@ -3,11 +3,15 @@ import { ImageGalleryItem } from './ImageGalleryItem';
 
 import { ImageListUl } from './styled';
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images, toggleModal }) => {
   return (
     <ImageListUl>
       {images.map(photo => (
-        <ImageGalleryItem key={photo.id} photo={photo} />
+        <ImageGalleryItem
+          toggleModal={toggleModal}
+          key={photo.id}
+          photo={photo}
+        />
       ))}
     </ImageListUl>
   );
