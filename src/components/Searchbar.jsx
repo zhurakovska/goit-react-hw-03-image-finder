@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { StyledForm, StyledInput, StyledButtonSearch } from './styled';
 
@@ -8,6 +9,7 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
     const query = e.target.query.value;
     onSearchInput(query);
   };
+
   return (
     <header>
       <StyledForm onSubmit={onSubmit}>
@@ -25,4 +27,9 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
       </StyledForm>
     </header>
   );
+};
+
+Searchbar.propTypes = {
+  onSearchInput: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };

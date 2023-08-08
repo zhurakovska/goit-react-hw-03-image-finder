@@ -15,9 +15,3 @@ export const Loader = () => {
     </>
   );
 };
-
-// const Wrapper = styled.dic`
-//   display: grid;
-//   place-items: center;
-//   min-height: 50vh;
-// `;
