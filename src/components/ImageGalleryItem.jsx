@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { ImageItemStyled } from './styled';
+
 export const ImageGalleryItem = ({ photo }) => {
   return (
-    <li>
+    <ImageItemStyled>
       <img src={photo.webformatURL} alt="photo" />
-    </li>
+    </ImageItemStyled>
   );
 };

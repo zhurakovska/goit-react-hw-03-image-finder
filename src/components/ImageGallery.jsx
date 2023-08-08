@@ -1,12 +1,14 @@
 import React from 'react';
 import { ImageGalleryItem } from './ImageGalleryItem';
 
+import { ImageListUl } from './styled';
+
 export const ImageGallery = ({ images }) => {
   return (
-    <ul>
+    <ImageListUl>
       {images.map(photo => (
         <ImageGalleryItem key={photo.id} photo={photo} />
       ))}
-    </ul>
+    </ImageListUl>
   );
 };

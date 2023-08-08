@@ -5,17 +5,8 @@ import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { fetchImages } from 'service/api';
 import { Loader } from './Loader';
-
-const initialState = {
-  loading: false,
-  error: '',
-  images: [],
-  page: 1,
-  per_page: 12,
-  totalHits: 0,
-  query: '',
-  showloadMore: false,
-};
+import { Modal } from './Modal';
+import { Container } from './styled';
 
 export class App extends React.Component {
   state = {
@@ -27,6 +18,9 @@ export class App extends React.Component {
     totalHits: 0,
     query: '',
     showloadMore: false,
+    currentImage: '',
+    isModalOpen: false,
+    tags: '',
   };
 
   async downloadImages() {
@@ -78,19 +72,44 @@ export class App extends React.Component {
     this.setState({ query });
   };
 
+  toggleModal = (imageURL, alt) => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+      currentImage: imageURL,
+      tags: alt,
+    }));
+  };
+
   render() {
-    const { images, loading, showloadMore } = this.state;
-    console.log(this.state.images);
+    const {
+      images,
+      loading,
+      showloadMore,
+      isModalOpen,
+      children,
+      currentImage,
+      tags,
+    } = this.state;
     return (
-      <>
+      <Container>
         <Searchbar
           onSearchInput={this.handleSearchInput}
           handleSubmit={this.handleSubmit}
         />
-        {<ImageGallery images={images} />}
+        {<ImageGallery toggleModal={this.toggleModal} images={images} />}
         {loading && <Loader />}
         {showloadMore && <Button onClick={this.handleLoadMore} />}
-      </>
+        {isModalOpen && (
+          <Modal
+            toggleModal={this.toggleModal}
+            currentImage={currentImage}
+            tags={tags}
+          >
+            {children}
+          </Modal>
+        )}{' '}
+        {/* если модалка открытра то мы показываем наше окно */}
+      </Container>
     );
   }
 }

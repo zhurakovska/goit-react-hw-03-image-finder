@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { StyledForm, StyledInput, StyledButtonSearch } from './styled';
+
 export const Searchbar = ({ onSearchInput, handleSubmit }) => {
   const onSubmit = e => {
     e.preventDefault();
@@ -8,12 +10,12 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
   };
   return (
     <header>
-      <form onSubmit={onSubmit}>
-        <button onClick={handleSubmit} type="submit">
+      <StyledForm onSubmit={onSubmit}>
+        <StyledButtonSearch onClick={handleSubmit} type="submit">
           Search
-        </button>
+        </StyledButtonSearch>
 
-        <input
+        <StyledInput
           type="text"
           autoComplete="off"
           autoFocus
@@ -21,7 +23,7 @@ export const Searchbar = ({ onSearchInput, handleSubmit }) => {
           placeholder="Search images and photos"
           onChange={e => onSearchInput(e.target.value)} // хендлим введеное
         />
-      </form>
+      </StyledForm>
     </header>
   );
 };
