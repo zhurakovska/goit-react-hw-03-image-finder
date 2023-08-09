@@ -9,9 +9,9 @@ export class Modal extends React.Component {
     children: PropTypes.node.isRequired,
   };
 
-  state = {
-    currentImage: this.props.largeImageURL,
-  };
+  // state = {
+  //   currentImage: this.props.largeImageURL,
+  // };
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown); // ивенлисенер будет срабатывать каждый раз когда нажимаем на кнопку
@@ -33,10 +33,10 @@ export class Modal extends React.Component {
     }
   };
 
-  getModalImage = () => {
-    const { largeImageURL } = this.props;
-    this.setState({ currentImage: largeImageURL });
-  };
+  // getModalImage = () => {
+  //   const { largeImageURL } = this.props;
+  //   this.setState({ currentImage: largeImageURL });
+  // };
 
   render() {
     return (

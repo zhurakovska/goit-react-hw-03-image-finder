@@ -3,33 +3,47 @@ import PropTypes from 'prop-types';
 
 import { StyledForm, StyledInput, StyledButtonSearch } from './styled';
 
-export const Searchbar = ({ onSearchInput, handleSubmit }) => {
-  const onSubmit = e => {
-    e.preventDefault();
-    const query = e.target.query.value;
-    onSearchInput(query);
+export class Searchbar extends React.Component {
+  state = {
+    inputValue: '',
   };
 
-  return (
-    <header>
-      <StyledForm onSubmit={onSubmit}>
-        <StyledInput
-          type="text"
-          autoComplete="off"
-          autoFocus
-          name="query"
-          placeholder="Search images and photos"
-          onChange={e => onSearchInput(e.target.value)} // хендлим введеное
-        />
-        <StyledButtonSearch onClick={handleSubmit} type="submit">
-          Search
-        </StyledButtonSearch>
-      </StyledForm>
-    </header>
-  );
-};
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.onSearchInput(this.state.inputValue);
+  };
 
-Searchbar.propTypes = {
-  onSearchInput: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-};
+  handleInputCheange = ({ target }) => {
+    this.setState({ inputValue: target.value });
+  };
+
+  render() {
+    return (
+      <header>
+        <StyledForm onSubmit={this.onSubmit}>
+          <StyledInput
+            type="text"
+            autoComplete="off"
+            autoFocus
+            name="query"
+            placeholder="Search images and photos"
+            onChange={this.handleInputCheange} // хендлим введеное
+          />
+          <StyledButtonSearch
+            onClick={this.handleSubmit}
+            type="submit"
+            //disabled={!query.length}
+            //className={!query.length && 'disabled'}
+          >
+            Search
+          </StyledButtonSearch>
+        </StyledForm>
+      </header>
+    );
+  }
+}
+
+// Searchbar.propTypes = {
+//   onSearchInput: PropTypes.func.isRequired,
+//   handleSubmit: PropTypes.func.isRequired,
+// };

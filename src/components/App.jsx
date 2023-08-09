@@ -21,45 +21,37 @@ export class App extends React.Component {
     isModalOpen: false,
     tags: '',
   };
-
-  async downloadImages() {
-    try {
-      this.setState({ loading: true });
-      const { per_page, page, query } = this.state;
-
-      if (!query.length) {
-        // делаем проверку если квери пустое то не делаем новый запрос
-        return;
-      }
-
-      const { hits, totalHits } = await fetchImages({
-        // тут мы получаем запрос
-        per_page, // тут мы перезаписываем этот запрос
-        page,
-        q: query,
-      });
-
-      this.setState({
-        images: [...this.state.images, ...hits], // тут мы соединяем старые картинки с новыми
-        showloadMore: page * per_page < totalHits, // по дефолту фолс но когда делаем проверку с формулой то если условие верное то вернет тру иначе фолс
-      });
-    } catch (error) {
-    } finally {
-      this.setState({ loading: false });
-    }
-  }
+  // Функция для загрузки изображений
 
   async componentDidUpdate(_, prevState) {
-    const { page } = this.state;
-    if (prevState.page !== page) {
-      // при нажатии на лоад мор, page уже не будет равен prevState.page, потому что ты обновишь это значение в функции handleLoadMore увеличив на один
-      this.downloadImages();
+    const { page, query } = this.state;
+
+    if ((prevState.query !== query || prevState.page) !== page) {
+      try {
+        this.setState({ loading: true, error: '' }); // Устанавливаем состояние "загрузка" и сбрасываем ошибку
+        const { per_page, page, query } = this.state; // Получаем данные из состояния
+
+        const { hits, totalHits } = await fetchImages({
+          // тут мы получаем запрос
+          per_page, // тут мы перезаписываем этот запрос
+          page,
+          q: query,
+        }); // Выполняем запрос на сервер и получаем результат
+
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits], // Объединяем старые и новые изображения
+          showloadMore: page * per_page < totalHits, // Показать кнопку "Load More" в зависимости от количества изображений
+        }));
+      } catch (error) {
+        this.setState({ error: 'An error occurred while fetching images.' }); // Обрабатываем ошибку, если запрос не удался
+      } finally {
+        this.setState({ loading: false });
+      }
     }
   }
 
   handleSubmit = async () => {
     this.setState({ images: [], page: 1, totalHits: 0 }); // обнуляем стейт чтобы при новом запросе не мешать данные с предыдущими
-    this.downloadImages(); // делаем первый запрос при нажатии на кнопку поиска
   };
 
   handleLoadMore = () => {
@@ -67,7 +59,9 @@ export class App extends React.Component {
   };
 
   handleSearchInput = query => {
-    this.setState({ query });
+    if (this.state.query !== query) {
+      this.setState({ query: query, hits: [], page: 1 });
+    }
   };
 
   toggleModal = imageURL => {
@@ -80,11 +74,13 @@ export class App extends React.Component {
   render() {
     const { images, loading, showloadMore, isModalOpen, currentImage, tags } =
       this.state;
+    // const isSearchButtonDisabled = !this.state.query.trim();
     return (
       <Container>
         <Searchbar
           onSearchInput={this.handleSearchInput}
           handleSubmit={this.handleSubmit}
+          query={this.state.query}
         />
         {<ImageGallery toggleModal={this.toggleModal} images={images} />}
         {loading && <Loader />}

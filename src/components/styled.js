@@ -25,8 +25,13 @@ export const StyledButtonSearch = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
 
-  &hover {
+  &:hover:not(.disabled) {
     background-color: #0056b3;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 `;
 
