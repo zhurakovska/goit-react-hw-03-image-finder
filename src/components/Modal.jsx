@@ -4,14 +4,9 @@ import { ModalWrapper, StyledModalWindow } from './styled';
 
 export class Modal extends React.Component {
   static propTypes = {
-    largeImageURL: PropTypes.string.isRequired,
     toggleModal: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
   };
-
-  // state = {
-  //   currentImage: this.props.largeImageURL,
-  // };
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown); // ивенлисенер будет срабатывать каждый раз когда нажимаем на кнопку
@@ -32,11 +27,6 @@ export class Modal extends React.Component {
       this.props.toggleModal();
     }
   };
-
-  // getModalImage = () => {
-  //   const { largeImageURL } = this.props;
-  //   this.setState({ currentImage: largeImageURL });
-  // };
 
   render() {
     return (
