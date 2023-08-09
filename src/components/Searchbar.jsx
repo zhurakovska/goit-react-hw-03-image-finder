@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import { StyledForm, StyledInput, StyledButtonSearch } from './styled';
 
 export class Searchbar extends React.Component {
+  static propTypes = {
+    onSearchInput: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     inputValue: '',
   };
@@ -18,6 +23,7 @@ export class Searchbar extends React.Component {
   };
 
   render() {
+    const disabled = !this.state.inputValue.length;
     return (
       <header>
         <StyledForm onSubmit={this.onSubmit}>
@@ -32,8 +38,8 @@ export class Searchbar extends React.Component {
           <StyledButtonSearch
             onClick={this.handleSubmit}
             type="submit"
-            //disabled={!query.length}
-            //className={!query.length && 'disabled'}
+            disabled={disabled}
+            className={disabled && 'disabled'}
           >
             Search
           </StyledButtonSearch>
@@ -42,8 +48,3 @@ export class Searchbar extends React.Component {
     );
   }
 }
-
-// Searchbar.propTypes = {
-//   onSearchInput: PropTypes.func.isRequired,
-//   handleSubmit: PropTypes.func.isRequired,
-// };
